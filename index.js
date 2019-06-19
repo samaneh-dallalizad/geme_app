@@ -64,27 +64,49 @@ app.get("/",(req,res)=>{
 })
 
 
-
-app.get('/team_info/:id', (req, res, next) => {
-
-  Teaminfo.findByPk(req.params.id)
-  .then(team => {    
-    if (!team){
-      res.json({ message: `team is not exist` })
-      Teaminfo.create({
-        id:req.params.id,
-        description:"The Sacramento Kings are an American professional basketball team based in Sacramento, California. The Kings compete in the National Basketball Association as a member of the Western Conference Pacific Division."
-      })
-      .then(team => {
-        console.log(team)
+app.post("/",(req,res)=>{  
+  if (req.body.result.action === "schedule") {
+  
+  }
+  else if (req.body.result.action === "teaminfo")
+  {
+    
+    app.get('/team_info/:id', (req, res, next) => {
+  
+      Teaminfo.findByPk(req.params.id)
+      .then(team => {    
+        if (!team){
+          res.json({
+            speech: 'Something went wrong!',
+            displayText: 'Something went wrong!',
+            source: 'game schedule'
+        })
+          
+        }
+        else{
+          return res.json({
+            speech: team.description,
+            displayText: team.description,
+            source: 'team info'
+        });
+        }
       })
       .catch(error => next(error))
-    }
-    else{
-      res.json(team)
-    }
-  })
-  .catch(error => next(error))
+    })
+  
+  }
 })
+
+
+
+
+
+
+
+
+
+
+
+
  const port =process.env.PORT|| 5000
  app.listen(port, () => console.log(`Example app listening on port ${port}!`))
