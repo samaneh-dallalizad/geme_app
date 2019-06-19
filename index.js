@@ -78,13 +78,13 @@ app.get('/team_info/:id', (req, res, next) => {
       .then(team => {
         console.log(team)
       })
-      .catch(error => next(error))
+      .catch(error => console.log(error) //next(error))
     }
     else{
       res.json(team)
     }
   })
-  .catch(error => next(error))
+  .catch(error => console.log(error) //next(error))
 })
  const port =process.env.PORT|| 5000
  app.listen(port, () => console.log(`Example app listening on port ${port}!`))
