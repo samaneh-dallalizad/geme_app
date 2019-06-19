@@ -63,14 +63,26 @@ app.get("/",(req,res)=>{
   res.send("hello world")
 })
 
+
+
 app.get('/team_info/:id', (req, res, next) => {
 
   Teaminfo.findByPk(req.params.id)
   .then(team => {    
-    if (!team)
-      res.status(404).json({ message: `team is not exist` })
-    else
+    if (!team){
+      res.json({ message: `team is not exist` })
+      Teaminfo.create({
+        id:req.params.id,
+        description:"The Sacramento Kings are an American professional basketball team based in Sacramento, California. The Kings compete in the National Basketball Association as a member of the Western Conference Pacific Division."
+      })
+      .then(team => {
+        console.log(team)
+      })
+      .catch(error => next(error))
+    }
+    else{
       res.json(team)
+    }
   })
   .catch(error => next(error))
 })
