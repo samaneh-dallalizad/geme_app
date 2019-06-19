@@ -65,14 +65,12 @@ app.get("/",(req,res)=>{
 
 
 app.post("/",(req,res)=>{  
+  
   if (req.body.result.action === "schedule") {
   
   }
   else if (req.body.result.action === "teaminfo")
-  {
-    
-    app.get('/team_info/:id', (req, res, next) => {
-  
+  {  
       Teaminfo.findByPk(req.params.id)
       .then(team => {    
         if (!team){
@@ -92,9 +90,8 @@ app.post("/",(req,res)=>{
         }
       })
       .catch(error => next(error))
-    })
-  
-  }
+    
+    }  
 })
 
 
