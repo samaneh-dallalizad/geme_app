@@ -3,7 +3,7 @@
  const express = require('express')
  const app = express()
 const bodyParser = require('body-parser')
-app.use(express.static('public'))
+//app.use(express.static('public'))
 app.use(bodyParser.json())
 
 sequelize.sync() .then(() => {
@@ -74,5 +74,5 @@ app.get('/team_info/:id', (req, res, next) => {
   })
   .catch(error => next(error))
 })
- const port = 5000
+ const port =process.env.PORT|| 5000
  app.listen(port, () => console.log(`Example app listening on port ${port}!`))
